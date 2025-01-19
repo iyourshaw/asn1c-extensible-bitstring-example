@@ -159,7 +159,7 @@ But they should not be identical:
 
 `SIZE(4, ..., 5)` means that the bitstring was originally defined with a size of 4, and has an extension added.  But if a specific value of the bitstring has size 4, it is within the extension root and should be encoded the same as if no extension were present, with no length determinant. If the bitstring had length 5, outside the extension root, then it should include a length determinant, but as a "semi-constrained whole number" which would be at least one byte, not as a single bit.
 
-`SIZE(4..5, ...)` means that that the bitstring has a size of 4 or 5, both of which are part of the extension root, and it also happens to be extensible, but has no extensions.  So it will always be encoded with a 0 extension bit, and will have a single bit as length determinant so long as no extensions are added.
+`SIZE(4..5, ...)` means that the bitstring has a size of 4 or 5, both of which are part of the extension root, and it also happens to be extensible, but has no extensions.  So it will always be encoded with a 0 extension bit, and will have a single bit as length determinant so long as no extensions are added.
 
 Compare the generated C code for the two cases:
 * [Fruits.c, Version 2 with SIZE(4, ..., 5)](src/v2/Fruits.c)
