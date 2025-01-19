@@ -51,7 +51,7 @@ mv converter-example converter-example-v1
 The XML example was then converted to UPER binary via:
 
 ```bash
-./converter-example-v1 -p FruitSalad -ixer -ouper FruitSalad.XML > FruitSalad.v1.uper
+./converter-example-v1 -p FruitSalad -ixer -ouper FruitSalad.xml > FruitSalad.v1.uper
 xxd -ps FruitSalad.v1.uper > FruitSalad.v1.hex
 xxd -b FruitSalad.v1.uper > FruitSalad.v1.binarytext
 ```
@@ -96,7 +96,7 @@ mv converter-example converter-example-v2
 ```
 and then try to read the UPER that we generated from version 1, by converting it to XML:
 ```bash
-./converter-example-v2 -p FruitSalad -iuper -oxer FruitSalad.v1.uper > FruitSalad.v2-from-v1-uper.XML
+./converter-example-v2 -p FruitSalad -iuper -oxer FruitSalad.v1.uper > FruitSalad.v2-from-v1-uper.xml
 ```
 
 This produces the following XML.
@@ -115,7 +115,7 @@ Our fruit salad is all messed up!  We now have kiwifruit that we don't want, and
 
 To understand what UPER the Version 2 converter is expecting, we encode the original XML with v2:
 ```bash
-./converter-example-v2 -p FruitSalad -ixer -ouper FruitSalad.XML > FruitSalad.v2.uper
+./converter-example-v2 -p FruitSalad -ixer -ouper FruitSalad.xml > FruitSalad.v2.uper
 xxd -ps FruitSalad.v2.uper > FruitSalad.v2.hex
 xxd -b FruitSalad.v2.uper > FruitSalad.v2.binarytext
 ```
@@ -157,9 +157,26 @@ If we compile this version of the spec and convert the example XML to UPER, the 
 
 But they should not be identical:
 
-`SIZE(4, ..., 5)` means that the bitstring was originally defined with a size of 4, and has an extension added.  But if a specific value of the bitstring has size 4, it is within the extension root and should be encoded the same as if no extension were present, with no length determinant.
+`SIZE(4, ..., 5)` means that the bitstring was originally defined with a size of 4, and has an extension added.  But if a specific value of the bitstring has size 4, it is within the extension root and should be encoded the same as if no extension were present, with no length determinant. If the bitstring had length 5, outside the extension root, then it should include a length determinant, but as a "semi-constrained whole number" which would be at least one byte, not as a single bit.
 
-`SIZE(4..5, ...)` means that that the bitstring has a size of 4 or 5, both of which are part of the extension root, and it also happens to be extensible, but has no extensions, so it will always be encoded with a 0 extension bit, and a length determinant bit.
+`SIZE(4..5, ...)` means that that the bitstring has a size of 4 or 5, both of which are part of the extension root, and it also happens to be extensible, but has no extensions.  So it will always be encoded with a 0 extension bit, and will have a single bit as length determinant so long as no extensions are added.
+
+Compare the generated C code for the two cases:
+* [Fruits.c, Version 2 with SIZE(4, ..., 5)](src/v2/Fruits.c)
+* [Fruits.c, with SIZE(4..5, ...)](src/RangeConstraint/Fruits.c)
+
+The genereted code for both cases is identical.  Both even include this struct definition with comment indicating that the size constraint is interpreted as an unextended range, line 53:
+
+```c
+asn_per_constraints_t asn_PER_type_Fruits_constr_1 CC_NOTUSED = {
+	{ APC_UNCONSTRAINED,	-1, -1,  0,  0 },
+	{ APC_CONSTRAINED | APC_EXTENSIBLE,  1,  1,  4,  5 }	/* (SIZE(4..5,...)) */,
+	0, 0	/* No PER value map */
+};
+```
+
+See the definition of the `asn_per_constraints_t` struct here:
+[per_support.h](src/RangeConstraint/per_support.h).  Examining that, it looks like the contraint specification does not have a way to express which sizes are in the extension root or not.
 
 ## Files
 
