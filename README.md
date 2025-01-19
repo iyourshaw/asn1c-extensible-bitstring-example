@@ -68,7 +68,7 @@ The interpretation of the binary UPER is as follows:
 |bits|meaning|
 |----|-------|
 |0|Extensibility marker.  Indicates that the bitstring is extensible, but is equal to 0 because the size has the base value of 4|
-|1111|Value of the bitstring: `apple`, `orange`, `grape`, and `banana` are all set
+|1111|Value of the bitstring: `apple`, `orange`, `grape`, and `banana` are all set|
 |01111111|An 8-bit integer with the serving size of 127|
 |000|Padding bits to produce 2 octets|
 
@@ -149,6 +149,7 @@ If we compile this version of the spec and convert the example XML to UPER, the 
 |----|-------|
 |0|Extensibility marker, equal to 0 because the bitstring has no bits set outside the base range of 4-5|
 |0|Length determinant of the bitstring.  Since the size can be either 4 or 5, a length determinant is necessary, and consists of a single bit.  The value 0 means the bitstring's length is 4.|
+|1111|Value of the bitstring: `apple`, `orange`, `grape`, and `banana` are all set|
 |01111111|An 8-bit integer with the serving size of 127|
 |00|Padding bits to produce 2 octets|
 
