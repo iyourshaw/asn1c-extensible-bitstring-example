@@ -26,7 +26,7 @@ Fruits ::= BIT STRING {
 
 `Fruits` is a bitstring with 4 items, with an extensibility marker (the three dots '...') in the SIZE constraint, to allow more fruits to be added in later versions.  `FruitSalad` is a sequence of a `Fruits` bitstring and a `servingSize` integer.
 
-Here is an example of a `FruitSalad` vaue written as XML.  We want apples, oranges, grapes and bananas in our fruit salad, with a serving size of 127 grams:
+Here is an example of a `FruitSalad` value written as XML.  We want apples, oranges, grapes and bananas in our fruit salad, with a serving size of 127 grams:
 
 ```XML
 <FruitSalad>
