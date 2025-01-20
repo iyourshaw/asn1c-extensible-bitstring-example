@@ -111,8 +111,6 @@ This produces the following XML.
 ```
 Our fruit salad is all messed up!  We now have kiwifruit that we don't want, and no bananas, that we do want (11101 = apple, orange, grape, kiwifruit). Not only that but the serving size is wrong!  What is going on?
 
-## Understanding What is Going On
-
 To understand what UPER the Version 2 converter is expecting, we encode the original XML with v2:
 ```bash
 ./converter-example-v2 -p FruitSalad -ixer -ouper FruitSalad.xml > FruitSalad.v2.uper
