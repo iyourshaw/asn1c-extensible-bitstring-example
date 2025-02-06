@@ -1,0 +1,18 @@
+-- Version 1, extensible bitstring
+FruitModuleV1 DEFINITIONS AUTOMATIC TAGS ::= 
+
+BEGIN
+
+FruitSalad ::= SEQUENCE {
+   fruits        Fruits,
+   servingSize   INTEGER(0..255)
+}
+
+Fruits ::= BIT STRING {
+   apple       (0),
+   orange      (1),
+   grape       (2),
+   banana      (3)
+} (SIZE (4, ...))
+
+END

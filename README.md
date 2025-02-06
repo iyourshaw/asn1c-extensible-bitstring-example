@@ -181,7 +181,8 @@ See the definition of the `asn_per_constraints_t` struct here:
 
 * `/asn` directory contains the ASN.1 specifications
 * `/src` directory contains the generated C source code
-* The root directory contains the converters and example output.
+* `/erlang` directory contains generated Erlang code and example output from the Erlang converters
+* The root directory contains the C converters and C example output.
 
 ## Reference
 

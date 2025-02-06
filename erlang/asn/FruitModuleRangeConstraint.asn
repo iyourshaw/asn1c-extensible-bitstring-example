@@ -1,0 +1,19 @@
+-- Size with range constraint
+FruitModuleRangeConstraint DEFINITIONS AUTOMATIC TAGS ::= 
+
+BEGIN
+
+FruitSalad ::= SEQUENCE {
+   fruits        Fruits,
+   servingSize   INTEGER(0..255)
+}
+
+Fruits ::= BIT STRING {
+   apple       (0),
+   orange      (1),
+   grape       (2),
+   banana      (3),
+   kiwifruit   (4)
+} (SIZE (4..5, ...))
+
+END
