@@ -286,7 +286,7 @@ The meaning of the bits is as follows:
 |bits|meaning|
 |----|-------|
 |1|Extensibility marker, equal to 1, meaning the length of the bitstring is not within the extension root.|
-|00000101|One byte containing the number 5.  This is a semi-constrained whole number containing the length of the bitstring per X.691, Sec 16.6 and 11.7 |
+|00000101|One byte containing the number 5.  This is a semi-constrained whole number with a lower bound of 0, containing the length of the bitstring per X.691, Sec 16.6 and 11.7.  The lower bound must be 0 and not 4, because it could be possible to add an extension to the size to allow it to be a smaller number than 4, e.g. "SIZE(4, ..., 2..5)" so the only constraint on the lower bound is that is must be non-negative.  The upper bound is unconstrained, because any number fo extension bits could theoretically be added. |
 |11111|The value of the bitstring: `apple`, `orange`, `grape`, `banana`, and `kiwifruit` are all set|
 |01111111|An 8-bit integer with the serving size of 127|
 |00|Padding bits to produce 3 octets|
