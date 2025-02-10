@@ -9,7 +9,7 @@
 -include("FruitModuleV1.hrl").
 -asn1_info([{vsn,'5.3.1'},
             {module,'FruitModuleV1'},
-            {options,[{i,"./src"},uper,verbose,{i,"./asn"},{outdir,"./src"},{i,"."}]}]).
+            {options,[{i,"./ebin"},uper,verbose,{i,"./asn"},{outdir,"./ebin"},{i,"."}]}]).
 
 -export([encoding_rule/0,maps/0,bit_string_format/0,
          legacy_erlang_types/0]).
